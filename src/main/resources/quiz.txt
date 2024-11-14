@@ -1,0 +1,110 @@
+What is the capital of Canada?|Ottawa
+What is 2 + 2?|4
+What is the color of the sky on a clear day?|Blue
+Name a programming language starting with J?|Java
+What is the largest planet in our solar system?|Jupiter
+What is the chemical symbol for water?|H2O
+Who wrote "Hamlet"?|Shakespeare
+What is 5 x 6?|30
+What is the freezing point of water in Celsius?|0
+What is the largest ocean on Earth?|Pacific
+What is the capital of France?|Paris
+What is the square root of 16?|4
+What is the primary color of bananas?|Yellow
+Name a programming language starting with P.|Python
+What is the smallest planet in our solar system?|Mercury
+What is the chemical symbol for gold?|Au
+Who wrote "Pride and Prejudice"?|Jane Austen
+What is 7 x 8?|56
+What is the boiling point of water in Celsius?|100
+What is the longest river on Earth?|Nile
+What is the capital of Japan?|Tokyo
+What is 3 + 5?|8
+What is the color of grass?|Green
+Name a programming language starting with C.|C++
+What is the third planet from the sun?|Earth
+What is the chemical symbol for oxygen?|O
+Who wrote "1984"?|George Orwell
+What is 6 x 7?|42
+What is the freezing point of water in Fahrenheit?|32
+What is the tallest mountain on Earth?|Mount Everest
+What is the capital of Italy?|Rome
+What is 4 + 4?|8
+What is the color of coal?|Black
+Name a programming language starting with R.|Ruby
+What is the hottest planet in our solar system?|Venus
+What is the chemical symbol for silver?|Ag
+Who wrote "The Great Gatsby"?|F. Scott Fitzgerald
+What is 8 x 5?|40
+What is the melting point of ice in Celsius?|0
+What is the second largest ocean on Earth?|Atlantic
+What is the capital of Germany?|Berlin
+What is 1 + 3?|4
+What is the color of lemons?|Yellow
+Name a programming language starting with S.|Swift
+What is the fourth planet from the sun?|Mars
+What is the chemical symbol for iron?|Fe
+Who wrote "To Kill a Mockingbird"?|Harper Lee
+What is 9 x 6?|54
+What is the boiling point of water in Fahrenheit?|212
+What is the deepest part of the ocean?|Mariana Trench
+What is the capital of Russia?|Moscow
+What is 5 + 3?|8
+What is the color of strawberries?|Red
+Name a programming language starting with G.|Go
+What is the largest desert on Earth?|Sahara
+What is the chemical symbol for sodium?|Na
+Who wrote "Moby Dick"?|Herman Melville
+What is 7 x 7?|49
+What is the density of water in grams per cubic centimeter?|1
+What is the largest continent on Earth?|Asia
+What is the capital of Spain?|Madrid
+What is 6 + 2?|8
+What is the color of blueberries?|Blue
+Name a programming language starting with K.|Kotlin
+What is the fifth planet from the sun?|Jupiter
+What is the chemical symbol for potassium?|K
+Who wrote "War and Peace"?|Leo Tolstoy
+What is 10 x 4?|40
+What is the freezing point of ethyl alcohol in Celsius?|-114
+What is the smallest ocean on Earth?|Arctic
+What is the capital of Australia?|Canberra
+What is 9 + 1?|10
+What is the color of oranges?|Orange
+Name a programming language starting with L.|Lisp
+What is the sixth planet from the sun?|Saturn
+What is the chemical symbol for chlorine?|Cl
+Who wrote "The Odyssey"?|Homer
+What is 8 x 8?|64
+What is the boiling point of ethanol in Celsius?|78.37
+What is the most abundant gas in Earth's atmosphere?|Nitrogen
+What is the capital of Brazil?|Brasília
+What is 2 + 6?|8
+What is the color of the sky at sunset?|Orange
+Name a programming language starting with H.|Haskell
+What is the seventh planet from the sun?|Uranus
+What is the chemical symbol for copper?|Cu
+Who wrote "The Catcher in the Rye"?|J.D. Salinger
+What is 11 x 5?|55
+What is the density of air in kilograms per cubic meter?|1.225
+What is the smallest continent on Earth?|Australia
+What is the capital of the United Kingdom?|London
+What is 12 + 4?|16
+What is the color of mint leaves?|Green
+Name a programming language starting with F.|Fortran
+What is the eighth planet from the sun?|Neptune
+What is the chemical symbol for lead?|Pb
+Who wrote "Brave New World"?|Aldous Huxley
+What is 7 x 9?|63
+What is the melting point of gold in Celsius?|1064
+What is the largest country by area?|Russia
+What is the capital of China?|Beijing
+What is 5 + 7?|12
+What is the color of cherries?|Red
+Name a programming language starting with T.|TypeScript
+What is the ninth planet in our solar system (now reclassified as a dwarf planet)?|Pluto
+What is the chemical symbol for tin?|Sn
+Who wrote "The Hobbit"?|J.R.R. Tolkien
+What is 8 x 9?|72
+What is the boiling point of mercury in Celsius?|356.73
+What is the tallest building in the world?|Burj Khalifa
