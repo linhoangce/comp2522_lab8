@@ -1,16 +1,16 @@
 package ca.bcit.comp2522.lab8;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,8 +29,9 @@ public class QuizApp extends Application
       final Scene scene;
       
       vbox = createLayout();
+      vbox.getStyleClass().add("vbox");
       scene = new Scene(vbox, 600, 400);
-      scene.getStylesheets().add("/main/resources/style.css");
+      scene.getStylesheets().add("/style.css");
 
       primaryStage.setScene(scene);
       primaryStage.setTitle("Simple Quiz App");
@@ -40,63 +41,89 @@ public class QuizApp extends Application
    private VBox createLayout()
    {
       final Label label;
+      final Label timerLabel;
       final Button startBtn;
       final Button submitBtn;
       final VBox vbox;
       final TextField textField;
       final Text scoreField;
       final TextArea textArea;
+      final ComboBox<String> difficultyBox;
+      final Timer timer;
 
       label = new Label("Press 'Start' to begin!");
+      timerLabel = new Label();
       startBtn = new Button("Start Quiz");
       submitBtn = new Button("Submit");
       textField = new TextField();
       scoreField = new Text("Score: ");
       textArea = new TextArea();
+      difficultyBox = new ComboBox<>();
+      timer = new Timer(timerLabel);
 
+      timerLabel.setVisible(false);
+      difficultyBox.getItems().addAll("Easy", "Medium", "Hard");
+      difficultyBox.setValue("Easy");
+
+      textField.getStyleClass().add("text-field");
+      submitBtn.getStyleClass().add("button");
+      startBtn.getStyleClass().add("button");
+      label.getStyleClass().add("label");
+
+      timerLabel.setVisible(false);
       textArea.setVisible(false);
       startBtn.setOnAction(e -> {
-         startQuiz(label, textField, startBtn, scoreField, textArea);
-         startBtn.setDisable(true);
+         final int timeLimit;
+
+         timeLimit = switch(difficultyBox.getValue()) {
+            case "Easy" -> 90;
+            case "Medium" -> 60;
+            default -> 45;
+         };
+
+         difficultyBox.setVisible(false);
+         startQuiz(label, timerLabel, textField, submitBtn, startBtn, scoreField, textArea, timer, difficultyBox, timeLimit);
       });
-      startBtn.setDisable(false);
-      vbox = new VBox(15, label, textField, submitBtn, startBtn, scoreField, textArea);
+
+      vbox = new VBox(15, label, timerLabel, textField, submitBtn, startBtn, scoreField, difficultyBox, textArea);
       
       return vbox;
    }
 
    private void startQuiz(final Label label,
+                          final Label timerLabel,
                           final TextField textField,
                           final Button submitBtn,
+                          final Button startBtn,
                           final Text scoreDisplay,
-                          final TextArea textArea)
+                          final TextArea textArea,
+                          final Timer timer,
+                          final ComboBox<String> difficulttyBox,
+                          final int timeLimit
+                          )
    {
       final Quiz quiz;
       final List<String> questionsList;
       final EventHandler<ActionEvent> onSubmit;
       final int[] currentQuiz = {0};
-      final String[] currentQuestion = new String[1];
+      final String[] currentQuestion;
 
       quiz = new Quiz();
       questionsList = new ArrayList<>();
 
-      try
-      {
-         final Map<String, String> map;
+      loadQuizFromFile(quiz);
 
-         map = readQuizFile();
+      currentQuestion = new String[]{quiz.getRandomQuestion()};
 
-         if(map != null)
-         {
-            quiz.loadQuiz(map);
-         }
-      }
-      catch(final IOException e)
-      {
-         System.out.println("Error initialing quiz map " + e.getMessage());
-      }
+      // Reset UI Components for New Quiz
+      startBtn.setDisable(true);
+      submitBtn.setDisable(false);
+      textField.setDisable(false);
+      textField.clear();
+      textArea.setVisible(false);
+      textArea.clear();
+      scoreDisplay.setText("Score: 0");
 
-      currentQuestion[0] = quiz.getRandomQuestion();
       questionsList.add(currentQuestion[0]);
       label.setText(currentQuestion[0]);
 
@@ -112,22 +139,51 @@ public class QuizApp extends Application
 
         if(currentQuiz[0] < QUIZ_ROUND)
         {
+           while(questionsList.contains(currentQuestion[0]))
+           {
+              currentQuestion[0] = quiz.getRandomQuestion();
+           }
+
            questionsList.add(currentQuestion[0]);
-           currentQuestion[0] = quiz.getRandomQuestion();
+
            label.setText(currentQuestion[0]);
            textField.clear();
         }
         else
         {
-           label.setText("Quiz Complete! Final Score: " + quiz.getScore() + "/10");
-           textField.setDisable(true);
-           submitBtn.setDisable(true);
-           displayQuizAnswerKeys(questionsList, quiz.getQuizMap(), textArea);
+           timer.stopTimer();
+           endQuiz(label, textField, submitBtn, startBtn, textArea, difficulttyBox, quiz, questionsList);
         }
       };
 
+      timer.startTimer(timeLimit, () -> {
+         timerLabel.setVisible(true);
+         timerLabel.setText("Time's up!");
+         textField.setDisable(true);
+         submitBtn.setDisable(true);
+         endQuiz(label, textField, submitBtn, startBtn, textArea, difficulttyBox, quiz, questionsList);
+      });
+
       textField.setOnAction(onSubmit);
       submitBtn.setOnAction(onSubmit);
+   }
+
+   private void endQuiz(final Label label,
+                        final TextField textField,
+                        final Button submitBtn,
+                        final Button startBtn,
+                        final TextArea textArea,
+                        final ComboBox<String> difficultyBox,
+                        final Quiz quiz,
+                        final List<String> questionsList)
+   {
+      difficultyBox.setVisible(true);
+      textField.setDisable(true);
+      submitBtn.setDisable(true);
+      startBtn.setDisable(false);
+      label.setText("Quiz Complete! Final Score: " + quiz.getScore() + "/" + QUIZ_ROUND);
+      displayQuizAnswerKeys(questionsList, quiz.getQuizMap(), textArea);
+
    }
 
    private void displayQuizAnswerKeys(final List<String> questionsList,
@@ -147,47 +203,24 @@ public class QuizApp extends Application
       textArea.setVisible(true);
    }
 
-
-//   private void submitAnswer(final TextField textField,
-//                             final String question,
-//                             final Quiz quiz,
-//                             final Text scoreDisplay)
-//   {
-//      final String userAnswer;
-//      final int score;
-//      final boolean isCorrect;
-//
-//      userAnswer = textField.getText();
-//      isCorrect = quiz.checkUserAnswer(question, userAnswer);
-//      score = quiz.getScore();
-//
-//      if(isCorrect)
-//      {
-//         scoreDisplay.setText("Score: " + score);
-//      }
-//
-//      textField.clear();
-//   }
-
-   private boolean checkAnswer(final String userAnswer,
-                              final String question,
-                              final Map<String, String> quizMap)
+   private void loadQuizFromFile(final Quiz quiz)
    {
-      final String correctAnswer;
+      try
+      {
+         final Map<String, String> map;
 
-      correctAnswer = quizMap.get(question);
+         map = readQuizFile();
 
-      return userAnswer.trim().equalsIgnoreCase(correctAnswer);
-
+         if(map != null)
+         {
+            quiz.loadQuiz(map);
+         }
+      }
+      catch(final IOException e)
+      {
+         System.out.println("Error initialing quiz map " + e.getMessage());
+      }
    }
-
-
-   private void initQuizInterface()
-   {
-
-   }
-
-
 
    private Map<String, String> readQuizFile() throws IOException {
       final Map<String, String> questionMap;
