@@ -1,7 +1,5 @@
 package ca.bcit.comp2522.lab8;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -98,7 +95,7 @@ public class QuizApp extends Application
                           final Text scoreDisplay,
                           final TextArea textArea,
                           final Timer timer,
-                          final ComboBox<String> difficulttyBox,
+                          final ComboBox<String> difficultyBox,
                           final int timeLimit
                           )
    {
@@ -116,13 +113,7 @@ public class QuizApp extends Application
       currentQuestion = new String[]{quiz.getRandomQuestion()};
 
       // Reset UI Components for New Quiz
-      startBtn.setDisable(true);
-      submitBtn.setDisable(false);
-      textField.setDisable(false);
-      textField.clear();
-      textArea.setVisible(false);
-      textArea.clear();
-      scoreDisplay.setText("Score: 0");
+      resetUIStates(startBtn, submitBtn, textField, textArea, scoreDisplay);
 
       questionsList.add(currentQuestion[0]);
       label.setText(currentQuestion[0]);
@@ -152,7 +143,7 @@ public class QuizApp extends Application
         else
         {
            timer.stopTimer();
-           endQuiz(label, textField, submitBtn, startBtn, textArea, difficulttyBox, quiz, questionsList);
+           endQuiz(label, textField, submitBtn, startBtn, textArea, difficultyBox, quiz, questionsList);
         }
       };
 
@@ -161,7 +152,7 @@ public class QuizApp extends Application
          timerLabel.setText("Time's up!");
          textField.setDisable(true);
          submitBtn.setDisable(true);
-         endQuiz(label, textField, submitBtn, startBtn, textArea, difficulttyBox, quiz, questionsList);
+         endQuiz(label, textField, submitBtn, startBtn, textArea, difficultyBox, quiz, questionsList);
       });
 
       textField.setOnAction(onSubmit);
@@ -201,6 +192,21 @@ public class QuizApp extends Application
       }
 
       textArea.setVisible(true);
+   }
+
+   private void resetUIStates(final Button startBtn,
+                              final Button submitBtn,
+                              final TextField textField,
+                              final TextArea textArea,
+                              final Text scoreDisplay)
+   {
+      startBtn.setDisable(true);
+      submitBtn.setDisable(false);
+      textField.setDisable(false);
+      textField.clear();
+      textArea.setVisible(false);
+      textArea.clear();
+      scoreDisplay.setText("Score: 0");
    }
 
    private void loadQuizFromFile(final Quiz quiz)
@@ -301,6 +307,4 @@ public class QuizApp extends Application
       return lines.filter(line -> line != null)
               .filter(line -> !line.isBlank());
    }
-
-
 }
