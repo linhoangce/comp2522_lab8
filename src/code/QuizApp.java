@@ -203,7 +203,7 @@ public class QuizApp extends Application
       submitButton.setDisable(false);
       startQuizButton.setDisable(true);
       userAnswer.setDisable(false);
-
+      resultTextArea.setVisible(false);
 
       final AtomicReference<String> question = new AtomicReference<>(questionIterator.next());
       final AtomicReference<String> answer = new AtomicReference<>(questionMap.get(question.get()));
