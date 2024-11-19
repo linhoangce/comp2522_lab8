@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.lab8;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,6 +24,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * A JavaFX application for a simple quiz game.
+ * The application reads questions from a file, presents them to the user,
+ * and tracks the score.
+ *
+ * @version 1.0
+ * @author Linh Hoang
+ * @author Pouyan Norouzi
+ */
 public class QuizApp extends Application
 {
    private static final int VBOX_DISTANCE_PIXELS = 10;
@@ -29,6 +40,11 @@ public class QuizApp extends Application
    private static final int SCENE_WIDTH = 500;
    private static final int SCENE_HEIGHT = 500;
 
+   /**
+    * Starts the JavaFX application.
+    *
+    * @param stage the primary stage for this application
+    */
    @Override
    public void start(final Stage stage)
    {
@@ -42,10 +58,13 @@ public class QuizApp extends Application
       stage.show();
    }
 
+   /**
+    * Creates the root VBox layout containing UI components.
+    *
+    * @return the root VBox layout
+    */
    private static VBox getRoot()
    {
-      Map<String, String> questions;
-
       final Label question;
       question = new Label("Press the start quiz button to start");
 
@@ -80,8 +99,11 @@ public class QuizApp extends Application
    }
 
    /**
+    * Reads questions and answers from a file.
+    * The file should contain each question-answer pair separated by a '|'.
     *
-    * @return
+    * @return a map of questions to their corresponding answers,
+    * or {@code null} if an error occurs while reading the file
     */
    private static Map<String, String> readQuestionsFromFile()
    {
@@ -117,6 +139,14 @@ public class QuizApp extends Application
       }
    }
 
+   /**
+    * Retrieves a specified number of random questions from the question pool.
+    *
+    * @param n the number of random questions to retrieve
+    * @return a map containing the selected questions and their answers or {@code null}
+    *     if an error occurs while reading the questions
+    * @throws IllegalArgumentException if {@code n} is negative
+    */
    private static Map<String, String> getNRandomQuestions(final int n)
    {
       if(n < 0)
@@ -154,12 +184,15 @@ public class QuizApp extends Application
    }
 
    /**
-    * @param questionLabel
-    * @param userAnswer
-    * @param submitButton
-    * @param startQuizButton
-    * @param scoreLabel
-    * @param resultTextArea
+    * Starts a new quiz session.
+    *
+    * @param questionLabel  the label to display the current question
+    * @param userAnswer     the text field for the user's answer
+    * @param submitButton   the button to submit the user's answer
+    * @param startQuizButton the button to start the quiz
+    * @param scoreLabel     the label to display the user's score
+    * @param resultTextArea the text area to display the results after the quiz
+    * @throws IllegalArgumentException if any argument is {@code null}
     */
    private static void startQuiz(final Label questionLabel,
                                  final TextField userAnswer,
@@ -184,7 +217,14 @@ public class QuizApp extends Application
       {
          throw new IllegalArgumentException("start quiz button cannot be null");
       }
-
+      if(scoreLabel == null)
+      {
+         throw new IllegalArgumentException("score label cannot be null");
+      }
+      if(resultTextArea == null)
+      {
+         throw new IllegalArgumentException("text area cannot be null");
+      }
 
       final Map<String, String> questionMap;
       final Iterator<String> questionIterator;
@@ -251,6 +291,11 @@ public class QuizApp extends Application
       });
    }
 
+   /**
+    * The main method to launch the application.
+    *
+    * @param args command-line arguments
+    */
    public static void main(final String[] args)
    {
       launch(args);
