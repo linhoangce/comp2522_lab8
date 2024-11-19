@@ -103,7 +103,7 @@ public class QuizApp extends Application
     * The file should contain each question-answer pair separated by a '|'.
     *
     * @return a map of questions to their corresponding answers,
-    * or {@code null} if an error occurs while reading the file
+    *     or {@code null} if an error occurs while reading the file
     */
    private static Map<String, String> readQuestionsFromFile()
    {
